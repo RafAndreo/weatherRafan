@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="WeatherApp"></div>
+    <script type="text/babel">
+    let data = new Object();
+    data.morning = [15,6,"cloudy"]
+    data.day = [12,12,"rainy"]
+    data.evening = [20,5,"ultraCloudy"]
+    data.night = [4,8,"winteriscoming"]
+
+    let bgs = {
+        "morning":"url(icons/background_morning.gif)",
+        "day":"url(icons/background_day.gif)",
+        "evening":"url(icons/background_evning.gif)",
+        "night":"url(icons/background_night.gif)"
+    }
+
+    let icons = {
+        "temp":"temp.png",
+        "cloudy":"icons/sun_and_clouds.png",
+        "rainy":"icons/rain.png",
+        "ultraCloudy":"icons/clouds.png",
+        "winteriscoming":"icons/snow.png"
+    }
+    class Wether_card extends React.Component {
+        constructor(props) {
+            super(props);
+        }
+
+        render() {
+            let card_style = {
+                "margin":"20px",
+                "width":"1800px",
+                "height":"500px",
+                "backgroundImage":bgs[this.props.time],
+                "display":"flex",
+                "alignItems":"center",
+                "justifyContent":"space-around",
+                "borderRadius":"20px",
+                "font": "12pt sans-serif",
+                "color": "white"
+            }
+            let img_style = {
+                "margin":"0",
+                "width":"50px",
+                "height":"50px",
+            }
+            let temp_img_style = {
+                "width":"25px",
+                "height":"25px",
+            }
+            return (
+                <div style={card_style}>
+                    <div>
+                        <h3>{this.props.title}</h3>
+                        <div style={{"display":"flex","alignItems":"center"}}>
+                            <h2>{this.props.temp}°C</h2>
+                        </div>
+                    </div>
+                    <div style={{"alignItems":"center"}}>
+                        <img src={icons[this.props.icon]} alt={this.props.icon} style={img_style}/>
+                        <h3 style={{"margin":"0"}}>{this.props.prec} mm</h3>
+                    </div>
+                </div>
+            );
+        }
+    }
+    function cards(obj){
+        return <div style={{"display":"flex"}}>
+            <Wether_card temp={obj.morning[0]} prec={obj.morning[1]} icon={obj.morning[2]} time="morning" title="Утро"/>
+            <Wether_card temp={obj.day[0]} prec={obj.day[1]} icon={obj.day[2]} time="day" title="День"/>
+            <Wether_card temp={obj.evening[0]} prec={obj.evening[1]} icon={obj.evening[2]} time="evening" title="Вечер"/>
+            <Wether_card temp={obj.night[0]} prec={obj.night[1]} icon={obj.night[2]} time="night" title="Ночь"/>
+        </div>
+
+    }
+
+    ReactDOM.render(cards(data), document.getElementById('WeatherApp'));
+
+    </script>
+</body>
+</html>
